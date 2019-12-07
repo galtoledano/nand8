@@ -205,12 +205,15 @@ segments = {'local': 'LCL', 'argument': 'ARG', 'this': 'THIS', 'that': 'THAT', '
 
 flow = {"label": """
         ({0})""",
-        "goto": """ @{0}
-        0;JMP""",
+        "goto": """
+        @{0}
+        0;JMP
+        """,
         "if-goto": """
         @SP
         M=M-1
         A=M
         D=M
         @{0}
-        D;JNE"""}
+        D;JNE
+        """}

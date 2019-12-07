@@ -130,6 +130,17 @@ def single_file(original_file):
     parse_file.close()
 
 
+def call_func(cmd):
+    return
+
+
+def define_func(cmd):
+    k = int(cmd[2])
+    func = d.flow["label"].format(cmd[1]) + "\n"
+    for i in range(k):
+        func.join(d.commands).format("LCL", 0) + "\n"
+
+
 def main():
     """
     the main function. translating the vm code to ams code
