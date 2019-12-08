@@ -92,6 +92,12 @@ def parse_cmd(line, counter):
     comm = cmd[0]
     if comm == "label" or comm == "goto" or comm == "if-goto":
         return d.flow[cmd[0]].format("".join(cmd[1:]))
+    elif comm == 'call':
+        return call_func(cmd, counter)
+    elif comm == 'function':
+        return define_func(cmd)
+    elif comm == 'return':
+        return return_val(cmd)
     else:
         return parse_line(cmd, counter)
 
@@ -130,8 +136,17 @@ def single_file(original_file):
     parse_file.close()
 
 
-def call_func(cmd):
-    return
+def call_func(cmd, counter):
+    label = cmd[1] + str(counter)
+    order = d.functions_dics['call'].format(cmd[2], label)
+    order += d.flow['goto'].format(label)
+    order += d.flow['label'].format(label)
+    return order
+
+
+def return_val(cmd):
+    poped = d.commands['pop'].format('ARG', 0)
+    return d.functions_dics['return'].format(poped)
 
 
 def define_func(cmd):

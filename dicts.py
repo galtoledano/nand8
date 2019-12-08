@@ -217,3 +217,100 @@ flow = {"label": """
         @{0}
         D;JNE
         """}
+
+# 'pushconstant': """
+# @{0}
+# D=A
+# @SP
+# A=M
+# M=D
+# @SP
+# M=M+1""",
+functions_dics = {'call': """
+        //push return value
+        @{1}
+        D=A
+        @SP
+        A=M
+        M=A-D
+        @SP
+        M=M+1
+        //push LCL
+        @LCL
+        D=M
+        @SP
+        A=M
+        M=D
+        @SP
+        M=M+1
+        //push ARG
+        @ARG
+        D=M
+        @SP
+        A=M
+        M=D
+        @SP
+        M=M+1
+        //push THIS
+        @THIS
+        D=M
+        @SP
+        A=M
+        M=D
+        @SP
+        M=M+1
+        //push THAT
+        @THAT
+        D=M
+        @SP
+        A=M
+        M=D
+        @SP
+        M=M+1
+        //ARG=SP-n-5
+        @5
+        D=A
+        @{0}
+        D=A+D
+        @SP
+        D=M-D
+        @ARG
+        M=D
+        //LCL = SP
+        @SP
+        D=M
+        @LCL
+        M=D
+        """,
+        'return': """
+        @LCL
+        D=M
+        @frame
+        M=D
+        D=M
+        @5
+        D=D-A
+        @ret
+        M=D
+        {0}
+        @ARG
+        D=M
+        @SP
+        M=D+1
+        @frame
+        D=M
+        @THAT
+        M=D-1
+        D=D-1
+        @THIS
+        M=D-1
+        D=D-1
+        @ARG
+        M=D-1
+        D=D-1
+        @LCL
+        M=D-1
+        D=D-1
+        @ret
+        0;JMP
+        """}
