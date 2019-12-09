@@ -145,16 +145,16 @@ def call_func(cmd, counter):
 
 
 def return_val(cmd):
-    poped = d.commands['pop'].format('ARG', 0)
-    return d.functions_dics['return'].format(poped)
+    # poped = d.commands['pop'].format('ARG', 0)
+    return d.functions_dics['return']
 
 
 def define_func(cmd):
     k = int(cmd[2])
     func = d.flow["label"].format(cmd[1]) + "\n"
     for i in range(k):
-        func.join(d.commands).format("LCL", 0) + "\n"
-
+        func += d.commands["pushconstant"].format(0) + "\n"
+    return func
 
 def main():
     """

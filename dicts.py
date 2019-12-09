@@ -218,14 +218,6 @@ flow = {"label": """
         D;JNE
         """}
 
-# 'pushconstant': """
-# @{0}
-# D=A
-# @SP
-# A=M
-# M=D
-# @SP
-# M=M+1""",
 functions_dics = {'call': """
         //push return value
         @{1}
@@ -287,30 +279,51 @@ functions_dics = {'call': """
         D=M
         @frame
         M=D
-        D=M
         @5
         D=D-A
+        @temp
+        A=D
+        D=M
         @ret
         M=D
-        {0}
+        @SP
+        M=M-1
+        A=M
+        D=M
+        @ARG
+        A=M
+        M=D
         @ARG
         D=M
         @SP
         M=D+1
         @frame
+        A=M-1
         D=M
         @THAT
-        M=D-1
-        D=D-1
+        M=D
+        @2
+        D=A
+        @frame
+        A=M-D
+        D=M
         @THIS
-        M=D-1
-        D=D-1
+        M=D
+        @3
+        D=A
+        @frame
+        A=M-D
+        D=M
         @ARG
-        M=D-1
-        D=D-1
+        M=D
+        @4
+        D=A
+        @frame
+        A=M-D
+        D=M
         @LCL
-        M=D-1
-        D=D-1
+        M=D
         @ret
+        A=M
         0;JMP
         """}
