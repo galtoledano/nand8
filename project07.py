@@ -97,7 +97,7 @@ def parse_cmd(line, counter):
     elif comm == 'function':
         return define_func(cmd)
     elif comm == 'return':
-        return return_val(counter)
+        return return_val()
     else:
         return parse_line(cmd, counter)
 
@@ -159,9 +159,9 @@ def call_func(cmd, counter):
     return order
 
 
-def return_val(c):
+def return_val():
     # poped = d.commands['pop'].format('ARG', 0)
-    return d.functions_dics['return'].format(c)
+    return d.functions_dics['return']
 
 
 
@@ -184,7 +184,8 @@ def create_sys_file(path):
     name = os.path.basename(path)
     parse_file = open_target_file(name + os.sep + name + ".asm")
     parse_file.write(d.commands['init'])
-    parse_file.write(call_func("call Sys.init 0", ""))
+    cmd = "call Sys.init 0".split(" ")
+    parse_file.write(call_func(cmd, ""))
     for file in os.listdir(path):
         if file.endswith(".vm"):
             f = reading_original_file(path+os.sep+file)

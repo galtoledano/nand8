@@ -5,7 +5,7 @@
         M=D
         
         //push return value
-        @a_RET
+        @Sys.init_RET
         D=A
         @SP
         A=M
@@ -47,7 +47,7 @@
         //ARG=SP-n-5
         @5
         D=A
-        @l
+        @0
         D=A+D
         @SP
         D=M-D
@@ -59,10 +59,10 @@
         @LCL
         M=D
         
-        @a
+        @Sys.init
         0;JMP
         
-        (a_RET)
+        (Sys.init_RET)
         (Sys.init)
 
         @4000	

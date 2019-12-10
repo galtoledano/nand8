@@ -292,7 +292,7 @@ functions_dics = {'call': """
         @temp
         A=D
         D=M
-        @ret_{0}
+        @ret
         M=D
         @SP
         M=M-1
@@ -331,7 +331,7 @@ functions_dics = {'call': """
         D=M
         @LCL
         M=D
-        @ret_{0}
+        @ret
         A=M
         0;JMP
         """}
