@@ -97,7 +97,7 @@ def parse_cmd(line, counter):
     elif comm == 'function':
         return define_func(cmd)
     elif comm == 'return':
-        return return_val()
+        return return_val(counter)
     else:
         return parse_line(cmd, counter)
 
@@ -154,14 +154,14 @@ def open_target_file(original_file):
 def call_func(cmd, counter):
     label = cmd[1] + str(counter)
     order = d.functions_dics['call'].format(cmd[2], label)
-    order += d.flow['goto'].format(label)
-    order += d.flow['label'].format(label)
+    order += d.flow['goto'].format(cmd[1])
+    order += d.flow['label'].format(label + "_RET")
     return order
 
 
-def return_val():
+def return_val(c):
     # poped = d.commands['pop'].format('ARG', 0)
-    return d.functions_dics['return']
+    return d.functions_dics['return'].format(c)
 
 
 
@@ -212,3 +212,4 @@ def main():
 
 if __name__ == '__main__':
     main()
+

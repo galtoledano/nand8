@@ -204,6 +204,7 @@ commands = \
         @SP
         M=D
         """
+
     }
 
 """ Dictionary with all of the segments and it's asm values"""
@@ -224,10 +225,9 @@ flow = {"label": """
         D;JNE
         """}
 
-
 functions_dics = {'call': """
         //push return value
-        @{1}
+        @{1}_RET
         D=A
         @SP
         A=M
@@ -281,6 +281,7 @@ functions_dics = {'call': """
         @LCL
         M=D
         """,
+
         'return': """
         @LCL
         D=M
@@ -291,7 +292,7 @@ functions_dics = {'call': """
         @temp
         A=D
         D=M
-        @ret
+        @ret_{0}
         M=D
         @SP
         M=M-1
@@ -330,8 +331,7 @@ functions_dics = {'call': """
         D=M
         @LCL
         M=D
-        @ret
+        @ret_{0}
         A=M
         0;JMP
-        """
-        }
+        """}
