@@ -184,7 +184,8 @@ def create_sys_file(path):
     name = os.path.basename(path)
     parse_file = open_target_file(name + os.sep + name + ".asm")
     parse_file.write(d.commands['init'])
-    parse_file.write(call_func("call Sys.init 0", ""))
+    cmd = "call Sys.init 0".split(" ")
+    parse_file.write(call_func(cmd, ""))
     for file in os.listdir(path):
         if file.endswith(".vm"):
             f = reading_original_file(path+os.sep+file)
