@@ -97,7 +97,7 @@ def parse_cmd(line, counter):
     elif comm == 'function':
         return define_func(cmd)
     elif comm == 'return':
-        return return_val(cmd)
+        return return_val()
     else:
         return parse_line(cmd, counter)
 
@@ -109,21 +109,13 @@ def single_file(original_file):
     :param path: the file's folder
     :param single: flag that marks if the file came from folder or its a single file
     """
-    file = open(original_file, 'r')
-    dir = os.path.dirname(original_file)
-    name = os.path.basename(original_file)
-    name = name.replace(".vm", ".asm")
-    if dir is "":
-        parse_file = open(name, 'w')
-    else:
-        parse_file = open(dir + os.path.sep + name, 'w')
-    line = file.readline()
-    f = []
-    while line:
-        l = remove_invalid_syntax(line)
-        if l != '':
-            f.append(l)
-        line = file.readline()
+    parse_file = open_target_file(original_file)
+    f = reading_original_file(original_file)
+    parse_file = convert_lines_to_asm(f, parse_file)
+    parse_file.close()
+
+
+def convert_lines_to_asm(f, parse_file):
     counter = 0
     for l in f:
         if l is None:
@@ -132,8 +124,31 @@ def single_file(original_file):
         counter += 1
         if p_line is not None:
             parse_file.write(p_line)
+    return parse_file
+
+
+def reading_original_file(original_file):
+    file = open(original_file, 'r')
+    line = file.readline()
+    f = []
+    while line:
+        l = remove_invalid_syntax(line)
+        if l != '':
+            f.append(l)
+        line = file.readline()
     file.close()
-    parse_file.close()
+    return f
+
+
+def open_target_file(original_file):
+    dir = os.path.dirname(original_file)
+    name = os.path.basename(original_file)
+    name = name.replace(".vm", ".asm")
+    if dir is "":
+        parse_file = open(name, 'w')
+    else:
+        parse_file = open(dir + os.path.sep + name, 'w')
+    return parse_file
 
 
 def call_func(cmd, counter):
@@ -144,17 +159,38 @@ def call_func(cmd, counter):
     return order
 
 
-def return_val(cmd):
+def return_val():
     # poped = d.commands['pop'].format('ARG', 0)
     return d.functions_dics['return']
+
 
 
 def define_func(cmd):
     k = int(cmd[2])
     func = d.flow["label"].format(cmd[1]) + "\n"
     for i in range(k):
-        func += d.commands["pushconstant"].format(0) + "\n"
+        func.join(d.commands).format("LCL", 0) + "\n"
     return func
+
+
+def is_sys(file_list):
+    for file in os.listdir(file_list):
+        if file == "Sys.vm":
+            return True
+    return False
+
+
+def create_sys_file(path):
+    name = os.path.basename(path)
+    parse_file = open_target_file(name + os.sep + name + ".asm")
+    parse_file.write(d.commands['init'])
+    parse_file.write(call_func("call Sys.init 0", ""))
+    for file in os.listdir(path):
+        if file.endswith(".vm"):
+            f = reading_original_file(path+os.sep+file)
+            parse_file = convert_lines_to_asm(f, parse_file)
+    parse_file.close()
+
 
 def main():
     """
@@ -164,9 +200,12 @@ def main():
         print('Usage: ', sys.argv[0], '<input file or directory>')
     path = sys.argv[1]
     if os.path.isdir(path):
-        for file in os.listdir(path):
-            if file.endswith(".vm"):
-                single_file(path + os.path.sep + file)
+        if is_sys(path):
+            create_sys_file(path)
+        else:
+            for file in os.listdir(path):
+                if file.endswith(".vm"):
+                    single_file(path + os.path.sep + file)
     else:
         single_file(path)
 

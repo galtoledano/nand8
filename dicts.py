@@ -197,7 +197,13 @@ commands = \
         A=M
         D=M
         @static.{0}
-        M=D"""
+        M=D""",
+        'init': """
+        @256
+        D=A
+        @SP
+        M=D
+        """
     }
 
 """ Dictionary with all of the segments and it's asm values"""
@@ -217,6 +223,7 @@ flow = {"label": """
         @{0}
         D;JNE
         """}
+
 
 functions_dics = {'call': """
         //push return value
@@ -326,4 +333,5 @@ functions_dics = {'call': """
         @ret
         A=M
         0;JMP
-        """}
+        """
+        }
