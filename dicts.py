@@ -231,7 +231,7 @@ functions_dics = {'call': """
         D=A
         @SP
         A=M
-        M=A-D
+        M=D        
         @SP
         M=M+1
         //push LCL
