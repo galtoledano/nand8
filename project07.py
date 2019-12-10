@@ -97,7 +97,7 @@ def parse_cmd(line, counter):
     elif comm == 'function':
         return define_func(cmd)
     elif comm == 'return':
-        return return_val(counter)
+        return return_val()
     else:
         return parse_line(cmd, counter)
 
@@ -159,9 +159,9 @@ def call_func(cmd, counter):
     return order
 
 
-def return_val(c):
+def return_val():
     # poped = d.commands['pop'].format('ARG', 0)
-    return d.functions_dics['return'].format(c)
+    return d.functions_dics['return']
 
 
 
