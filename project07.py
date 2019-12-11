@@ -68,9 +68,9 @@ def parse_line(command, counter, class_name):
             return d.commands[command[CMD] + command[SEG]].format(d.segments[command[SEG]], command[DATA])
         elif command[SEG] == STATIC:
             if class_name is not "":
-                #  remove the class name
-                return
-            return d.commands[command[CMD] + command[SEG]].format(command[SEG] + command[DATA])
+                return d.commands[command[CMD] + command[SEG]].format(class_name + command[DATA])
+            else :
+                return d.commands[command[CMD] + command[SEG]].format(command[DATA])
         return d.commands[command[CMD]].format(d.segments[command[SEG]], command[DATA])
     elif command[0] == "gt":
         return d.commands['make_same_sign'].format("gt", counter, "-1", "0") + d.commands['compare'].format(counter, "JLE")
@@ -103,9 +103,9 @@ def parse_cmd(line, counter, class_name):
     elif comm == 'call':
         return call_func(cmd, counter), class_name
     elif comm == 'function':
-        return define_func(cmd), class_name
+        return define_func(cmd, class_name)
     elif comm == 'return':
-        return return_val(cmd, class_name)
+        return return_val(cmd, class_name), class_name
     else:
         return parse_line(cmd, counter, class_name), class_name
 
@@ -124,11 +124,11 @@ def single_file(original_file):
 
 
 def convert_lines_to_asm(f, parse_file):
+    class_name = ""
     counter = 0
     for l in f:
         if l is None:
             continue
-        class_name = ""
         p_line, class_name = parse_cmd(l, counter, class_name)
         counter += 1
         if p_line is not None:
@@ -170,19 +170,19 @@ def call_func(cmd, counter):
 
 def return_val(cmd, class_name):
     # poped = d.commands['pop'].format('ARG', 0)
+    return d.functions_dics['return']
+
+
+
+def define_func(cmd, class_name):
     index = cmd[1].find(".")
     if index != -1:
         class_name = cmd[1][:index]
-    return d.functions_dics['return'], class_name
-
-
-
-def define_func(cmd):
     k = int(cmd[2])
     func = d.flow["label"].format(cmd[1]) + "\n"
     for i in range(k):
         func += d.commands["pushconstant"].format("0") + "\n"
-    return func
+    return func, class_name
 
 
 def is_sys(file_list):
