@@ -47,7 +47,7 @@ COMMENT = '(.*)(\/\/.*)'
 ##############################################functions##############################################################
 
 
-def parse_line(command, counter):
+def parse_line(command, counter, class_name):
     """
     parsing single line to asm code
     :param l: the line
@@ -67,7 +67,10 @@ def parse_line(command, counter):
         elif command[SEG] == TEMP:
             return d.commands[command[CMD] + command[SEG]].format(d.segments[command[SEG]], command[DATA])
         elif command[SEG] == STATIC:
-            return d.commands[command[CMD] + command[SEG]].format(command[DATA])
+            if class_name is not "":
+                #  remove the class name
+                return
+            return d.commands[command[CMD] + command[SEG]].format(command[SEG] + command[DATA])
         return d.commands[command[CMD]].format(d.segments[command[SEG]], command[DATA])
     elif command[0] == "gt":
         return d.commands['make_same_sign'].format("gt", counter, "-1", "0") + d.commands['compare'].format(counter, "JLE")
@@ -92,19 +95,19 @@ def remove_invalid_syntax(line):
     return line
 
 
-def parse_cmd(line, counter):
+def parse_cmd(line, counter, class_name):
     cmd = line.split(" ")
     comm = cmd[0]
     if comm == "label" or comm == "goto" or comm == "if-goto":
-        return d.flow[cmd[0]].format("".join(cmd[1:]))
+        return d.flow[cmd[0]].format("".join(cmd[1:])), class_name
     elif comm == 'call':
-        return call_func(cmd, counter)
+        return call_func(cmd, counter), class_name
     elif comm == 'function':
-        return define_func(cmd)
+        return define_func(cmd), class_name
     elif comm == 'return':
-        return return_val()
+        return return_val(cmd, class_name)
     else:
-        return parse_line(cmd, counter)
+        return parse_line(cmd, counter, class_name), class_name
 
 
 def single_file(original_file):
@@ -125,7 +128,8 @@ def convert_lines_to_asm(f, parse_file):
     for l in f:
         if l is None:
             continue
-        p_line = parse_cmd(l, counter)
+        class_name = ""
+        p_line, class_name = parse_cmd(l, counter, class_name)
         counter += 1
         if p_line is not None:
             parse_file.write(p_line)
@@ -164,9 +168,12 @@ def call_func(cmd, counter):
     return order
 
 
-def return_val():
+def return_val(cmd, class_name):
     # poped = d.commands['pop'].format('ARG', 0)
-    return d.functions_dics['return']
+    index = cmd[1].find(".")
+    if index != -1:
+        class_name = cmd[1][:index]
+    return d.functions_dics['return'], class_name
 
 
 

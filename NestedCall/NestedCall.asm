@@ -9,7 +9,7 @@
         D=A
         @SP
         A=M
-        M=A-D
+        M=D        
         @SP
         M=M+1
         //push LCL
@@ -96,7 +96,7 @@
         D=A
         @SP
         A=M
-        M=A-D
+        M=D        
         @SP
         M=M+1
         //push LCL
@@ -155,13 +155,13 @@
         @1
         A=D+A
         D=A
-        @address
+        @13
         M=D
         @SP
         M=M-1
         A=M
         D=M
-        @address
+        @13
         A=M
         M=D
         (LOOP)
@@ -169,6 +169,46 @@
         0;JMP
         
         (Sys.main)
+
+        @0
+        D=A
+        @SP
+        A=M
+        M=D
+        @SP
+        M=M+1
+
+        @0
+        D=A
+        @SP
+        A=M
+        M=D
+        @SP
+        M=M+1
+
+        @0
+        D=A
+        @SP
+        A=M
+        M=D
+        @SP
+        M=M+1
+
+        @0
+        D=A
+        @SP
+        A=M
+        M=D
+        @SP
+        M=M+1
+
+        @0
+        D=A
+        @SP
+        A=M
+        M=D
+        @SP
+        M=M+1
 
         @4001
         D=A
@@ -209,13 +249,13 @@
         @1
         A=D+A
         D=A
-        @address
+        @13
         M=D
         @SP
         M=M-1
         A=M
         D=M
-        @address
+        @13
         A=M
         M=D
         @40
@@ -231,13 +271,13 @@
         @2
         A=D+A
         D=A
-        @address
+        @13
         M=D
         @SP
         M=M-1
         A=M
         D=M
-        @address
+        @13
         A=M
         M=D
         @6
@@ -253,13 +293,13 @@
         @3
         A=D+A
         D=A
-        @address
+        @13
         M=D
         @SP
         M=M-1
         A=M
         D=M
-        @address
+        @13
         A=M
         M=D
         @123
@@ -274,7 +314,7 @@
         D=A
         @SP
         A=M
-        M=A-D
+        M=D        
         @SP
         M=M+1
         //push LCL
@@ -333,13 +373,13 @@
         @0
         A=D+A
         D=A
-        @address
+        @13
         M=D
         @SP
         M=M-1
         A=M
         D=M
-        @address
+        @13
         A=M
         M=D
         @LCL
@@ -427,14 +467,14 @@
         M=M-1
         @LCL
         D=M
-        @frame
+        @13
         M=D
         @5
         D=D-A
-        @temp
+        @14
         A=D
         D=M
-        @ret_32
+        @15
         M=D
         @SP
         M=M-1
@@ -447,33 +487,33 @@
         D=M
         @SP
         M=D+1
-        @frame
+        @13
         A=M-1
         D=M
         @THAT
         M=D
         @2
         D=A
-        @frame
+        @13
         A=M-D
         D=M
         @THIS
         M=D
         @3
         D=A
-        @frame
+        @13
         A=M-D
         D=M
         @ARG
         M=D
         @4
         D=A
-        @frame
+        @13
         A=M-D
         D=M
         @LCL
         M=D
-        @ret_32
+        @15
         A=M
         0;JMP
         
@@ -532,14 +572,14 @@
         M=M-1
         @LCL
         D=M
-        @frame
+        @13
         M=D
         @5
         D=D-A
-        @temp
+        @14
         A=D
         D=M
-        @ret_41
+        @15
         M=D
         @SP
         M=M-1
@@ -552,33 +592,33 @@
         D=M
         @SP
         M=D+1
-        @frame
+        @13
         A=M-1
         D=M
         @THAT
         M=D
         @2
         D=A
-        @frame
+        @13
         A=M-D
         D=M
         @THIS
         M=D
         @3
         D=A
-        @frame
+        @13
         A=M-D
         D=M
         @ARG
         M=D
         @4
         D=A
-        @frame
+        @13
         A=M-D
         D=M
         @LCL
         M=D
-        @ret_41
+        @15
         A=M
         0;JMP
         

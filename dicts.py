@@ -40,37 +40,37 @@ commands = \
         M=-1  
         (END_EQ_{0})""",
 
-        'lt': """
-        @SP
-        A=M-1
-        D=M
-        A=A-1
-        D=M-D
-        M=0
-        @SP
-        M=M-1
-        @END_LT_{0}
-        D;JLE
-        @SP
-        A=M-1
-        M=-1
-        (END_LT_{0})""",
+        # 'lt': """
+        # @SP
+        # A=M-1
+        # D=M
+        # A=A-1
+        # D=M-D
+        # M=0
+        # @SP
+        # M=M-1
+        # @END_LT_{0}
+        # D;JLE
+        # @SP
+        # A=M-1
+        # M=-1
+        # (END_LT_{0})""",
 
-        'gt': """
-        @SP
-        A=M-1
-        D=M
-        A=A-1
-        D=M-D
-        M=0
-        @SP
-        M=M-1
-        @END_GT_{0}
-        D;JLE
-        @SP
-        A=M-1
-        M=-1
-        (END_GT_{0})""",
+        # 'gt': """
+        # @SP
+        # A=M-1
+        # D=M
+        # A=A-1
+        # D=M-D
+        # M=0
+        # @SP
+        # M=M-1
+        # @END_GT_{0}
+        # D;JLE
+        # @SP
+        # A=M-1
+        # M=-1
+        # (END_GT_{0})""",
 
 
         'and': """
@@ -198,67 +198,70 @@ commands = \
         D=M
         @static.{0}
         M=D""",
+
+
         'init': """
         @256
         D=A
         @SP
         M=D
         """,
+
         'make_same_sign': """
         @SP
         AM=M-1
         D=M
-        @R13
+        @13
         M=D
-        @Y.isPositive.{1}
+        @pos_y_{1}
         D;JGT
         @SP
         A=M
         A=A-1
         D=M
-        @isSameSign.{1}
+        @same_{1}
         D;JLT
         @SP
         A=M
         A=A-1
         M={2}
-        @CONTINUE.{1}
+        @t_{1}
         0;JMP
-        (Y.isPositive.{1})
+        (pos_y_{1})
         @SP
         A=M
         A=A-1
         D=M
-        @isSameSign.{1}
+        @same_{1}
         D;JGT
         @SP
         A=M
         A=A-1
         M={3}
-        @CONTINUE.{1}
+        @t_{1}
         0;JMP
-        (isSameSign.{1})
+        (same_{1})
         """,
 
         'compare': """
-        @R13
+        @13
         D = M
         @SP
         A = M
         A = A - 1
         D = M - D
-        @FALSE.{0}
+        @f_{0}
         D;{1}
         @SP
         A = M - 1 
         M = -1 
-        @CONTINUE.{0}
+        @t_{0}
         0;JMP
-        (FALSE.{0})
+        (f_{0})
         @SP
         A = M - 1
         M = 0
-        (CONTINUE.{0})
+        (t_{0})
         """
 
     }
