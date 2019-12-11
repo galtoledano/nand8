@@ -148,13 +148,13 @@ commands = \
         @{1}
         A=D+A
         D=A
-        @address
+        @13
         M=D
         @SP
         M=M-1
         A=M
         D=M
-        @address
+        @13
         A=M
         M=D""",
 
@@ -168,18 +168,18 @@ commands = \
         M=M+1""",
 
         'poptemp': """
-        @{0}
+        @5
         D=A
         @{1}
         A=D+A
         D=A
-        @address
+        @13
         M=D
         @SP
         M=M-1
         A=M
         D=M
-        @address
+        @13
         A=M
         M=D""",
 
@@ -203,6 +203,62 @@ commands = \
         D=A
         @SP
         M=D
+        """,
+        'make_same_sign': """
+        @SP
+        AM=M-1
+        D=M
+        @R13
+        M=D
+        @Y.isPositive.{1}
+        D;JGT
+        @SP
+        A=M
+        A=A-1
+        D=M
+        @isSameSign.{1}
+        D;JLT
+        @SP
+        A=M
+        A=A-1
+        M={2}
+        @CONTINUE.{1}
+        0;JMP
+        (Y.isPositive.{1})
+        @SP
+        A=M
+        A=A-1
+        D=M
+        @isSameSign.{1}
+        D;JGT
+        @SP
+        A=M
+        A=A-1
+        M={3}
+        @CONTINUE.{1}
+        0;JMP
+        (isSameSign.{1})
+        """,
+
+        'compare': """
+        @R13
+        D = M
+        @SP
+        A = M
+        A = A - 1
+        D = M - D
+        @FALSE.{0}
+        D;{1}
+        @SP
+        A = M - 1 
+        M = -1 
+        @CONTINUE.{0}
+        0;JMP
+        (FALSE.{0})
+        @SP
+        A = M - 1
+        M = 0
+        (CONTINUE.{0})
         """
 
     }
@@ -285,14 +341,14 @@ functions_dics = {'call': """
         'return': """
         @LCL
         D=M
-        @frame
+        @13
         M=D
         @5
         D=D-A
-        @temp
+        @14
         A=D
         D=M
-        @ret
+        @15
         M=D
         @SP
         M=M-1
@@ -305,33 +361,33 @@ functions_dics = {'call': """
         D=M
         @SP
         M=D+1
-        @frame
+        @13
         A=M-1
         D=M
         @THAT
         M=D
         @2
         D=A
-        @frame
+        @13
         A=M-D
         D=M
         @THIS
         M=D
         @3
         D=A
-        @frame
+        @13
         A=M-D
         D=M
         @ARG
         M=D
         @4
         D=A
-        @frame
+        @13
         A=M-D
         D=M
         @LCL
         M=D
-        @ret
+        @15
         A=M
         0;JMP
         """}

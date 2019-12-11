@@ -69,6 +69,11 @@ def parse_line(command, counter):
         elif command[SEG] == STATIC:
             return d.commands[command[CMD] + command[SEG]].format(command[DATA])
         return d.commands[command[CMD]].format(d.segments[command[SEG]], command[DATA])
+    elif command[0] == "gt":
+        return d.commands['make_same_sign'].format("gt", counter, "-1", "0") + d.commands['compare'].format(counter, "JLE")
+    elif command[0] == "lt":
+        return d.commands['make_same_sign'].format("lt", counter, "0", "-1") + d.commands['compare'].format(counter,
+                                                                                                            "JGE")
     return d.commands[command[CMD]].format(counter)
 
 
@@ -169,7 +174,7 @@ def define_func(cmd):
     k = int(cmd[2])
     func = d.flow["label"].format(cmd[1]) + "\n"
     for i in range(k):
-        func.join(d.commands).format("LCL", 0) + "\n"
+        func += d.commands["pushconstant"].format("0") + "\n"
     return func
 
 
@@ -214,3 +219,4 @@ def main():
 if __name__ == '__main__':
     main()
 
+#todo handale with full path
