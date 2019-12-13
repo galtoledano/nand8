@@ -91,12 +91,16 @@ commands = \
         @SP
         M=M-1""",
 
+        # 'not': """
+        # @SP
+        # A=M-1
+        # D=-1
+        # M=D-M""",
         'not': """
         @SP
         A=M-1
-        D=-1
-        M=D-M""",
-
+        D=M
+        M=!D""",
         #  todo : 3rd line, need to correct D=A
         'push': """
         @{0}
@@ -209,7 +213,8 @@ commands = \
 
         'make_same_sign': """
         @SP
-        AM=M-1
+        M=M-1
+        A=M
         D=M
         @13
         M=D
@@ -245,22 +250,22 @@ commands = \
 
         'compare': """
         @13
-        D = M
+        D=M
         @SP
-        A = M
-        A = A - 1
-        D = M - D
+        A=M
+        A=A-1
+        D=M-D
         @f_{0}
         D;{1}
         @SP
-        A = M - 1 
-        M = -1 
+        A=M-1 
+        M=-1 
         @t_{0}
         0;JMP
         (f_{0})
         @SP
-        A = M - 1
-        M = 0
+        A=M-1
+        M=0
         (t_{0})
         """
 

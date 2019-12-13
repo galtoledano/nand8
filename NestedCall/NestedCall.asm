@@ -65,7 +65,7 @@
         (Sys.init_RET)
         (Sys.init)
 
-        @4000	
+        @4000
         D=A
         @SP
         A=M
@@ -164,8 +164,8 @@
         @13
         A=M
         M=D
-        (LOOP)
-        @LOOP
+        (Sys.LOOP)
+        @Sys.LOOP
         0;JMP
         
         (Sys.main)
