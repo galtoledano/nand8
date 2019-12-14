@@ -59,7 +59,9 @@ def parse_line(command, counter, class_name):
         if command[SEG] == CONSTANT:
             if command[CMD] == POP:  #  not supporting constant pop
                 return
-            return d.commands[command[CMD]+command[SEG]].format(command[DATA])
+            if int(command[DATA]) < 0:
+                return d.commands[command[CMD]+command[SEG]].format(command[DATA][1:]) + "\n" + d.commands['neg']
+            return d.commands[command[CMD] + command[SEG]].format(command[DATA])
         elif command[SEG] == POINTER:
             if command[DATA] == THIS_ZERO:
                 return d.commands[command[CMD]+command[SEG]].format(d.segments[THIS])
@@ -75,7 +77,7 @@ def parse_line(command, counter, class_name):
     elif command[0] == "gt":
         return d.commands['make_same_sign'].format("gt", class_name + "_" + str(counter), "-1", "0") + d.commands['compare'].format(class_name + "_" + str(counter), "JLE")
     elif command[0] == "lt":
-        return d.commands['make_same_sign'].format("lt",class_name + "_" + str(counter), "0", "-1") + d.commands['compare'].format(class_name + "_" + str(counter),
+        return d.commands['make_same_sign'].format("lt", class_name + "_" + str(counter), "0", "-1") + d.commands['compare'].format(class_name + "_" + str(counter),
                                                                                                             "JGE")
     return d.commands[command[CMD]].format(counter)
 
@@ -236,5 +238,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-
-#todo handale with full path

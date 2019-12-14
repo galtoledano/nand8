@@ -99,15 +99,14 @@ commands = \
         'not': """
         @SP
         A=M-1
-        D=M
-        M=!D""",
+        M=!M""",
         #  todo : 3rd line, need to correct D=A
         'push': """
         @{0}
         A=M
         D=A
         @{1}
-        A=D+A
+        A=A+D
         D=M
         @SP
         A=M
@@ -128,7 +127,7 @@ commands = \
         @{0}
         D=A
         @{1}
-        A=D+A
+        A=A+D
         D=M
         @SP
         A=M
