@@ -40,39 +40,6 @@ commands = \
         M=-1  
         (END_EQ_{0})""",
 
-        # 'lt': """
-        # @SP
-        # A=M-1
-        # D=M
-        # A=A-1
-        # D=M-D
-        # M=0
-        # @SP
-        # M=M-1
-        # @END_LT_{0}
-        # D;JLE
-        # @SP
-        # A=M-1
-        # M=-1
-        # (END_LT_{0})""",
-
-        # 'gt': """
-        # @SP
-        # A=M-1
-        # D=M
-        # A=A-1
-        # D=M-D
-        # M=0
-        # @SP
-        # M=M-1
-        # @END_GT_{0}
-        # D;JLE
-        # @SP
-        # A=M-1
-        # M=-1
-        # (END_GT_{0})""",
-
-
         'and': """
         @SP
         A=M-1
@@ -91,16 +58,11 @@ commands = \
         @SP
         M=M-1""",
 
-        # 'not': """
-        # @SP
-        # A=M-1
-        # D=-1
-        # M=D-M""",
         'not': """
         @SP
         A=M-1
         M=!M""",
-        #  todo : 3rd line, need to correct D=A
+
         'push': """
         @{0}
         A=M

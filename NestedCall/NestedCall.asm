@@ -386,7 +386,7 @@
         A=M
         D=A
         @0
-        A=D+A
+        A=A+D
         D=M
         @SP
         A=M
@@ -397,7 +397,7 @@
         A=M
         D=A
         @1
-        A=D+A
+        A=A+D
         D=M
         @SP
         A=M
@@ -408,7 +408,7 @@
         A=M
         D=A
         @2
-        A=D+A
+        A=A+D
         D=M
         @SP
         A=M
@@ -419,7 +419,7 @@
         A=M
         D=A
         @3
-        A=D+A
+        A=A+D
         D=M
         @SP
         A=M
@@ -430,7 +430,7 @@
         A=M
         D=A
         @4
-        A=D+A
+        A=A+D
         D=M
         @SP
         A=M
@@ -549,7 +549,7 @@
         A=M
         D=A
         @0
-        A=D+A
+        A=A+D
         D=M
         @SP
         A=M
